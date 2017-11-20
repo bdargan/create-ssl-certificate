@@ -11,6 +11,8 @@ const colors = {
   default: '\x1b[0m'
 }
 
+const hostnameRegex = "/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/";
+
 const commands = {
   config(config) {
     return `cat > openssl.cnf <<-EOF
@@ -63,7 +65,7 @@ function pause () {
 }
 
 function isValidHostname(text) {
-  if (typeof text !== 'string' || !text.match(/^[a-zA-Z\-]+$/)) {
+  if (typeof text !== 'string' || !text.match(hostnameRegex)) {
     console.error(colors.red + `You did not pass in a valid hostname`)
     process.exit(1)
   }
@@ -72,7 +74,7 @@ function isValidHostname(text) {
 }
 
 function isValidDomain(text) {
-  if (typeof text !== 'string' || !text.match(/^[a-zA-Z]+$/)) {
+  if (typeof text !== 'string' || !text.match(hostnameRegex)) {
     console.error(colors.red + `You did not pass in a valid domain`)
     process.exit(1)
   }
